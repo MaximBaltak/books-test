@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: mongo-db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build: .
+    container_name: express-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+volumes:
+  mongo-data:
